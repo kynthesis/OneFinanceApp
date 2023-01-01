@@ -1,5 +1,8 @@
 package com.h2;
 
+import java.util.Map;
+import java.util.Scanner;
+
 /**
  * Hello world!
  *
@@ -8,19 +11,28 @@ public class BestLoanRates
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
-    }
+        Scanner scanner = new Scanner(System.in);
 
-    public static int doubleTheNumber(int number) {
-        return 2 * number;
-    }
+        System.out.println("Enter your name");
+        String name = scanner.nextLine();
+        System.out.println("Hello " + name);
 
-    private static int add(int[] numbers) {
-        var sum = 0;
-        for (int i = 0; i < numbers.length; i++) {
-            sum += numbers[i];
+        System.out.println("Enter the loan term (in years)");
+        int loanTermInYears = scanner.nextInt();
+        float bestRate = getRates(loanTermInYears);
+
+        if (bestRate == 0.0f) {
+            System.out.println("No available rates for term: " + loanTermInYears + " years");
+        } else {
+            System.out.println("Best Available Rate: " + getRates(loanTermInYears) + "%");
         }
 
-        return sum;
+        scanner.close();
+    }
+
+    public static final Map<Integer, Float> bestRates = Map.of(1, 5.50f, 2, 3.45f, 3, 2.67f);
+
+    public static float getRates(int loanTermInYears) {
+        return bestRates.getOrDefault(loanTermInYears, 0.0f);
     }
 }
